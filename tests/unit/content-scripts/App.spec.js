@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import App from '@/content-scripts/App'
 
-describe('Contact-Scripts — App Component', () => {
+describe('Content-Scripts — App Component', () => {
   it('shows the user an input field when a shortcut is pressed', async () => {
     const wrapper = mount(App)
 
