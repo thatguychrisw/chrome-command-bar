@@ -1,3 +1,5 @@
+# Shortcut Data Structure
+
 ```json
 {
   "urlPattern": "string|regex",
