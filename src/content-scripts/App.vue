@@ -13,21 +13,13 @@ export default {
       show: false,
     }
   },
-  mounted () {
-    console.log('app loaded')
-
+  created () {
     window.addEventListener('keydown', (e) => {
-      console.log('pressed', e)
-
       if (e.metaKey && e.ctrlKey && e.key === 'p') {
-        console.log('show command bar')
-
         this.show = true
       }
 
       if (e.key === "Escape") {
-        console.log('hide command bar')
-
         this.show = false
       }
     });
