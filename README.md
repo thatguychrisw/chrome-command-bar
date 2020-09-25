@@ -5,6 +5,7 @@
 
 ## References
 * [Command Bar v1 Design Mocks](https://drive.google.com/file/d/14gDuAU8L-H2kGa3exOaxbh5F3j1P-ZCz/view?usp=sharing)
+* [Shortcut Data Structure](./Shortcut-Data-Structure.md)
 
 ## Project setup
 ```
