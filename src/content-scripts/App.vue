@@ -8,9 +8,9 @@ import useCommandBarShortcut from '@/composables/useCommandBarShortcut'
 
 export default {
   name: 'App',
-  components: {CommandBar},
-  setup () {
-    const {showCommandBar} = useCommandBarShortcut()
+  components: { CommandBar },
+  setup() {
+    const { showCommandBar } = useCommandBarShortcut()
 
     return {
       showCommandBar
@@ -19,5 +19,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

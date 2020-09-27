@@ -6,6 +6,3 @@ const commandBar = document.createElement('div')
 document.body.appendChild(commandBar)
 
 createApp(App).mount(commandBar)
-
-
-
