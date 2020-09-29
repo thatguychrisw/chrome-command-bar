@@ -1,5 +1,5 @@
 <template>
-  <command-bar :show="showCommandBar"></command-bar>
+  <command-bar :show="showCommandBar" />
 </template>
 
 <script>
@@ -19,4 +19,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="postcss">
+/** Custom css */
+.usage-badge {
+  @apply _inline-block _bg-blue-100 _px-2 _rounded-md;
+}
+</style>
