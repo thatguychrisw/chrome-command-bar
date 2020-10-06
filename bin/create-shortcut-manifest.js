@@ -4,6 +4,9 @@ const glob = require('glob')
 const fs = require('fs')
 const path = require('path')
 
+const prettifyJson = obj => JSON.stringify(obj, null, 2)
+const parseJson = path => JSON.parse(fs.readFileSync(path))
+
 /**
  * @type Object
  * @property {string} path
@@ -30,7 +33,7 @@ if (shortcuts.length === 0) {
   process.exit()
 }
 
-const maps = shortcuts.map(path => Object.assign(JSON.parse(fs.readFileSync(path)), { path }))
+const maps = shortcuts.map(path => Object.assign(parseJson(path), { path }))
 
 const manifest = maps.reduce((manifest, map) => {
   manifest[map['urlPattern']] = path.basename(map.path)
@@ -38,6 +41,6 @@ const manifest = maps.reduce((manifest, map) => {
   return manifest
 }, {})
 
-fs.writeFileSync(options.output, JSON.stringify(manifest, null, 2))
+fs.writeFileSync(options.output, prettifyJson(manifest))
 
 console.log(`shortcut manifest created: ${options.output}`)
