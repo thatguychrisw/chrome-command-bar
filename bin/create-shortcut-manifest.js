@@ -24,6 +24,11 @@ const options = yargs
   }).argv
 
 const shortcuts = glob.sync(`${options.path}/**/*.json`)
+if (shortcuts.length === 0) {
+  console.warn('no shortcuts were found; cannot create manifest')
+
+  process.exit()
+}
 
 const maps = shortcuts.map(path => Object.assign(JSON.parse(fs.readFileSync(path)), { path }))
 
