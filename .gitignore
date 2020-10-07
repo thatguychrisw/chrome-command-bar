@@ -2,6 +2,7 @@
 node_modules
 /dist
 /public/manifest
+/public/shortcuts
 
 # local env files
 .env.local
