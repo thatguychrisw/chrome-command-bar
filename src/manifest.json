@@ -5,6 +5,8 @@
   "description": "A Vue Browser Extension",
   "default_locale": "en",
   "permissions": [
+    "alarms",
+    "storage",
     "activeTab",
     "<all_urls>",
     "*://*/*"
