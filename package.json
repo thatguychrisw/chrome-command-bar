@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "create:shortcut-manifest": "bin/create-shortcut-manifest.js -p ./src/assets/shortcuts -o ./public/manifest/shortcut-manifest.json"
+    "create:shortcut-manifest": "bin/create-shortcut-manifest.js -p ./src/assets/shortcuts -o ./public/manifest/shortcut-manifest.json",
+    "publish:shortcuts": "cp ./src/assets/shortcuts/*.json ./public/shortcuts/"
   },
   "dependencies": {
     "core-js": "^3.6.5",
