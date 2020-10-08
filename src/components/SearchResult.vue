@@ -47,6 +47,6 @@ export default {
 .result-element:hover,
 .result-element:focus,
 .result-element.active {
-  @apply _bg-gray-100;
+  @apply _bg-gray-100 _shadow-sm;
 }
 </style>
