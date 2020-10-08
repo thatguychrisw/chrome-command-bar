@@ -11,6 +11,7 @@
     "publish:shortcuts": "cp ./src/assets/shortcuts/*.json ./public/shortcuts/"
   },
   "dependencies": {
+    "@headlessui/vue": "^0.2.0",
     "core-js": "^3.6.5",
     "ky": "^0.24.0",
     "tailwindcss": "^1.8.10",
