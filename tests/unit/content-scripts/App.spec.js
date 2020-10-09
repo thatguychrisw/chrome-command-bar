@@ -2,8 +2,23 @@ import { mount } from '@vue/test-utils'
 import App from '@/content-scripts/App'
 
 describe('Content-Scripts — App Component', () => {
+  const mountApp = options => {
+    const mountOptions = Object.assign(
+      {
+        global: {
+          directives: {
+            focus: jest.fn()
+          }
+        }
+      },
+      options
+    )
+
+    return mount(App, mountOptions)
+  }
+
   it('shows the user an input field when a shortcut is pressed', async () => {
-    const wrapper = mount(App)
+    const wrapper = mountApp()
 
     window.dispatchEvent(
       new KeyboardEvent('keydown', {
@@ -19,7 +34,7 @@ describe('Content-Scripts — App Component', () => {
   })
 
   it('hides the input when esc is pressed', async () => {
-    const wrapper = mount(App)
+    const wrapper = mountApp()
 
     window.dispatchEvent(
       new KeyboardEvent('keydown', {
