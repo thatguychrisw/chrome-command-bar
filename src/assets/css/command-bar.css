@@ -3,3 +3,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.chrome-cmd-bar-container {
+    font-size: 16px !important;
+    line-height: 16px !important;
+}
