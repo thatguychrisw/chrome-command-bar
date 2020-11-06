@@ -1,0 +1,17 @@
+{
+  "urlPattern": "http*://*.*",
+  "shortcuts": [
+    {
+      "label": "Bold Text",
+      "events": [
+        {
+          "type": "KeyboardEvent",
+          "name": "keydown",
+          "options": {
+            "key": "b"
+          }
+        }
+      ]
+    }
+  ]
+}
