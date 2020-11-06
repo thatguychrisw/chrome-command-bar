@@ -5,20 +5,20 @@
         <ListboxButton v-model="term" :as="SearchInput" />
         <nav-tips />
         <transition
-          leave-to-class="_opacity-0"
-          leave-from-class="_opacity-100"
           leave-active-class="_transition _ease-in _duration-100"
+          leave-from-class="_opacity-100"
+          leave-to-class="_opacity-0"
         >
           <div class="_z-20 _relative _grid _gap-6 _bg-white _px-2 _py-6" v-if="results.length">
             <ListboxOptions static>
               <!-- Disabled options will be skipped by keyboard navigation. -->
               <ListboxOption
-                :key="i"
-                :value="result"
-                v-slot="{ active }"
                 v-for="(result, i) in results"
+                :key="i"
+                v-slot="{ active }"
+                :value="result"
               >
-                <search-result :result="result" :active="active" />
+                <search-result :active="active" :result="result" />
               </ListboxOption>
             </ListboxOptions>
           </div>
