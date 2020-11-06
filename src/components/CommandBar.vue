@@ -92,6 +92,10 @@ export default {
 }
 
 .chrome-cmd-bar-card {
-  @apply _w-2/3 _max-w-screen-lg _overflow-hidden _shadow-xl _bg-white _relative _mt-32 _border-gray-100 _border _border-solid _rounded-lg;
+  @apply _w-2 / 3 _max-w-screen-lg _overflow-hidden _shadow-xl _bg-white _relative _mt-32 _border-gray-100 _border _border-solid _rounded-lg;
+}
+
+*:focus {
+  @apply outline-none;
 }
 </style>
