@@ -1,4 +1,7 @@
 import ky from 'ky'
+import session from '@/services/session'
+
+window.session = session
 
 const prettifyJson = obj => JSON.stringify(obj, null, 2)
 
@@ -28,14 +31,14 @@ const cacheShortcuts = async alarm => {
       .get(`https://chrome-command-bar.netlify.app/shortcuts/${manifestShortcut}`)
       .json()
 
-    localStorage.setItem(`ccb/shortcuts/${manifestShortcut}`, prettifyJson(shortcut))
+    await session.store(`ccb/shortcuts/${manifestShortcut}`, prettifyJson(shortcut))
 
     return shortcut
   })
 
-  localStorage.setItem('ccb/shortcuts', prettifyJson(await Promise.all(shortcuts)))
+  await session.store('ccb/shortcuts', prettifyJson(await Promise.all(shortcuts)))
 
-  console.log('stored shortcut manifest in local storage')
+  console.log('stored shortcuts in local storage', await session.get('ccb/shortcuts'))
 }
 
 /**
@@ -48,9 +51,12 @@ const cacheShortcutManifest = async () => {
     .get('https://chrome-command-bar.netlify.app/manifest/shortcut-manifest.json')
     .json()
 
-  localStorage.setItem('ccb/shortcut-manifest', prettifyJson(manifest))
+  await session.store('ccb/shortcut-manifest', prettifyJson(manifest))
 
-  console.log('stored shortcut manifest in local storage')
+  console.log(
+    'stored shortcut manifest in local storage',
+    await session.get('ccb/shortcut-manifest')
+  )
 
   return manifest
 }

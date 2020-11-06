@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import session from '@/services/session'
 import { Listbox, ListboxOptions, ListboxButton, ListboxOption } from '@headlessui/vue'
 
 import NavTips from './NavTips'
@@ -53,35 +54,34 @@ export default {
 
     term: '',
     selectedResult: {},
-    results: [
-      {
-        label: 'Create New Issue',
-        events: [
-          {
-            type: 'string[KeyboardEvent|Event]',
-            name: 'cmd + shift + i',
-            options: {}
-          }
-        ]
-      },
-
-      {
-        label: 'Create New PR',
-        events: [
-          {
-            type: 'string[KeyboardEvent|Event]',
-            name: 'cmd + shift + p',
-            options: {}
-          }
-        ]
-      }
-    ]
+    results: []
   }),
 
-  methods: {
-    fireEvent(shortcut) {
-      console.log(shortcut)
+  methods: {},
+  async mounted() {
+    const shortcuts = await session.get('ccb/shortcuts')
+
+    if (!shortcuts) return // need to fetch live from the web at this point; it hasn't been cached
+    console.log('shortcuts', shortcuts)
+
+    const urlMatches = (target, candidate) => {
+      const pattern = candidate.replace(/([.?+^$[\]\\(){}|/-])/g, '\\$1').replace(/\*/g, '.*')
+      console.log('comparing', target, pattern)
+
+      return new RegExp(pattern).test(target)
     }
+
+    const appShortcuts = shortcuts.reduce((appShortcuts, app) => {
+      if (urlMatches(window.location.href, app.urlPattern)) {
+        appShortcuts = appShortcuts.concat(app.shortcuts)
+      }
+
+      return appShortcuts
+    }, [])
+
+    console.log('app shortcuts', appShortcuts)
+
+    this.results = appShortcuts
   }
 }
 </script>
@@ -90,6 +90,7 @@ export default {
 .chrome-cmd-bar-container {
   @apply _flex _items-start _justify-center _h-screen _w-screen _z-max _fixed _top-0 _left-0 _bg-white _bg-opacity-75 _font-maven;
 }
+
 .chrome-cmd-bar-card {
   @apply _w-2/3 _max-w-screen-lg _overflow-hidden _shadow-xl _bg-white _relative _mt-32 _border-gray-100 _border _border-solid _rounded-lg;
 }
