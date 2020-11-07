@@ -17,7 +17,7 @@ const mountComposable = () => {
 }
 
 describe('useCommandBarShortcut', () => {
-  it('it provides a reference to whether the command bar should show based on if a shortcut is used', () => {
+  it('sets a boolean when a combination of keys are pressed', () => {
     const { showCommandBar } = mountComposable()
 
     expect(showCommandBar.value).toBe(false)
@@ -29,7 +29,28 @@ describe('useCommandBarShortcut', () => {
         metaKey: true
       })
     )
-
     expect(showCommandBar.value).toBe(true)
+  })
+
+  it('sets a boolean when the escape key is pressed', () => {
+    const { showCommandBar } = mountComposable()
+
+    expect(showCommandBar.value).toBe(false)
+
+    window.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'p',
+        ctrlKey: true,
+        metaKey: true
+      })
+    )
+    expect(showCommandBar.value).toBe(true)
+
+    window.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Escape'
+      })
+    )
+    expect(showCommandBar.value).toBe(false)
   })
 })
