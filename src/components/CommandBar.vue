@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import session from '@/services/session'
+import session from '@/utilities/session'
 import { Listbox, ListboxOptions, ListboxButton, ListboxOption } from '@headlessui/vue'
 
 import NavTips from './NavTips'

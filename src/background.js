@@ -1,5 +1,5 @@
 import ky from 'ky'
-import session from '@/services/session'
+import session from '@/utilities/session'
 
 window.session = session
 
