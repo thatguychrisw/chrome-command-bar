@@ -1,10 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import { parseJson } from '@/utilities/json'
+import { stubWindowLocation } from '../../stubs/window-location'
+import { storeShortcutStubs } from '../../stubs/session-shortcuts'
 import App from '@/content-scripts/App'
 import flushPromises from 'flush-promises'
-
-jest.mock('@/utilities/session')
 
 describe('Content-Scripts — App Component', () => {
   const mountApp = options => {
@@ -22,9 +21,7 @@ describe('Content-Scripts — App Component', () => {
     return mount(App, mountOptions)
   }
 
-  it('shows the user an input field when a shortcut is pressed', async () => {
-    const wrapper = mountApp()
-
+  const emitShowAppShortcutEvent = () => {
     window.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'p',
@@ -32,6 +29,20 @@ describe('Content-Scripts — App Component', () => {
         metaKey: true
       })
     )
+  }
+
+  const emitHideAppShortcutEvent = () => {
+    window.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Escape'
+      })
+    )
+  }
+
+  it('shows the user an input field when a shortcut is pressed', async () => {
+    const wrapper = mountApp()
+
+    emitShowAppShortcutEvent()
 
     await wrapper.vm.$nextTick()
 
@@ -41,56 +52,31 @@ describe('Content-Scripts — App Component', () => {
   it('hides the input when esc is pressed', async () => {
     const wrapper = mountApp()
 
-    window.dispatchEvent(
-      new KeyboardEvent('keydown', {
-        key: 'p',
-        ctrlKey: true,
-        metaKey: true
-      })
-    )
+    emitShowAppShortcutEvent()
 
     await wrapper.vm.$nextTick()
 
     expect(wrapper.find('input').exists()).toBe(true)
 
-    window.dispatchEvent(
-      new KeyboardEvent('keydown', {
-        key: 'Escape'
-      })
-    )
+    emitHideAppShortcutEvent()
 
-    await wrapper.vm.$nextTick()
+    await nextTick()
 
     expect(wrapper.find('input').exists()).toBe(false)
   })
 
   it('shows the user a list of shortcuts based on the current url', async () => {
-    const session = require('@/utilities/session')
+    const stub = (await storeShortcutStubs('google-sheets-a.json'))[0]
 
-    const stubsPath = __dirname + '/../../stubs/shortcuts/'
-    const stub = parseJson(`${stubsPath}/google-sheets-a.json`)
-    await session.store(`ccb/shortcuts`, [stub])
-
-    global.window = Object.create(window)
-    Object.defineProperty(window, 'location', {
-      value: {
-        href: 'https://sheets.google.com'
-      }
-    })
+    stubWindowLocation('https://sheets.google.com')
 
     const wrapper = mountApp()
 
-    window.dispatchEvent(
-      new KeyboardEvent('keydown', {
-        key: 'p',
-        ctrlKey: true,
-        metaKey: true
-      })
-    )
+    emitShowAppShortcutEvent()
 
     await nextTick()
     await flushPromises()
 
-    expect(wrapper.text()).toContain('Bold')
+    expect(wrapper.text()).toContain(stub.shortcuts[0].label)
   })
 })
