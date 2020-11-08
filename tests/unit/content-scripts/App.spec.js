@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import { readFileSync } from 'fs'
+import { parseJson } from '@/utilities/json'
 import App from '@/content-scripts/App'
 import flushPromises from 'flush-promises'
 
@@ -94,9 +94,3 @@ describe('Content-Scripts — App Component', () => {
     expect(wrapper.text()).toContain('Bold')
   })
 })
-
-/**
- * @param path
- * @returns {Object}
- */
-const parseJson = path => JSON.parse(readFileSync(path))

@@ -1,5 +1,5 @@
 import { resolveAppShortcuts } from '@/utilities/app-shortcut-resolver'
-import { readFileSync } from 'fs'
+import { parseJson } from '@/utilities/json'
 
 describe('app-shortcut-resolver', () => {
   const stubsPath = __dirname + '/../../stubs/shortcuts/'
@@ -13,9 +13,3 @@ describe('app-shortcut-resolver', () => {
     expect(appShortcuts[0].label).toEqual(stub.shortcuts[0].label)
   })
 })
-
-/**
- * @param path
- * @returns {Object}
- */
-const parseJson = path => JSON.parse(readFileSync(path))
