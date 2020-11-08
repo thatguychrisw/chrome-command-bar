@@ -1,4 +1,4 @@
-import resolveAppShortcuts from '@/utilities/app-shortcut-resolver'
+import { resolveAppShortcuts } from '@/utilities/app-shortcut-resolver'
 import { readFileSync } from 'fs'
 
 describe('app-shortcut-resolver', () => {

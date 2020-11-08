@@ -4,7 +4,7 @@
  * @param shortcuts
  * @returns {*}
  */
-export default function(url, shortcuts) {
+export function resolveAppShortcuts(url, shortcuts) {
   const appShortcuts = shortcuts.reduce((appShortcuts, app) => {
     if (urlMatches(url, app.urlPattern)) {
       appShortcuts = appShortcuts.concat(app.shortcuts)

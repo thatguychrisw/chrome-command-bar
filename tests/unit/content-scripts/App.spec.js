@@ -1,5 +1,10 @@
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
+import { readFileSync } from 'fs'
 import App from '@/content-scripts/App'
+import flushPromises from 'flush-promises'
+
+jest.mock('@/utilities/session')
 
 describe('Content-Scripts — App Component', () => {
   const mountApp = options => {
@@ -58,4 +63,40 @@ describe('Content-Scripts — App Component', () => {
 
     expect(wrapper.find('input').exists()).toBe(false)
   })
+
+  it('shows the user a list of shortcuts based on the current url', async () => {
+    const session = require('@/utilities/session')
+
+    const stubsPath = __dirname + '/../../stubs/shortcuts/'
+    const stub = parseJson(`${stubsPath}/google-sheets-a.json`)
+    await session.store(`ccb/shortcuts`, [stub])
+
+    global.window = Object.create(window)
+    Object.defineProperty(window, 'location', {
+      value: {
+        href: 'https://sheets.google.com'
+      }
+    })
+
+    const wrapper = mountApp()
+
+    window.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'p',
+        ctrlKey: true,
+        metaKey: true
+      })
+    )
+
+    await nextTick()
+    await flushPromises()
+
+    expect(wrapper.text()).toContain('Bold')
+  })
 })
+
+/**
+ * @param path
+ * @returns {Object}
+ */
+const parseJson = path => JSON.parse(readFileSync(path))
