@@ -13,6 +13,7 @@
   "dependencies": {
     "@headlessui/vue": "^0.2.0",
     "core-js": "^3.6.5",
+    "flush-promises": "^1.0.2",
     "ky": "^0.24.0",
     "tailwindcss": "^1.8.10",
     "vue": "^3.0.0-0",

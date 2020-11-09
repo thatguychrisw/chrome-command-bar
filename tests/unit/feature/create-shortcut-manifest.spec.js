@@ -1,5 +1,6 @@
 import { execSync } from 'child_process'
-import { readFileSync, existsSync, unlinkSync } from 'fs'
+import { existsSync, unlinkSync } from 'fs'
+import { parseJson } from '@/utilities/json'
 
 describe('create:shortcut-manifest', () => {
   const manifestPath = __dirname + '/manifest.json'
@@ -62,9 +63,3 @@ const createShortcutManifest = (path, output) => {
 
   return !!output
 }
-
-/**
- * @param path
- * @returns {Object}
- */
-const parseJson = path => JSON.parse(readFileSync(path))

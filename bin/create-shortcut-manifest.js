@@ -3,9 +3,7 @@ const yargs = require('yargs')
 const glob = require('glob')
 const fs = require('fs')
 const path = require('path')
-
-const prettifyJson = obj => JSON.stringify(obj, null, 2)
-const parseJson = path => JSON.parse(fs.readFileSync(path))
+import { parseJson, prettifyJson } from '@/utilities/json'
 
 /**
  * @type Object

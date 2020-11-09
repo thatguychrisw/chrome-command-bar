@@ -9,7 +9,7 @@
           leave-from-class="_opacity-100"
           leave-to-class="_opacity-0"
         >
-          <div class="_z-20 _relative _grid _gap-6 _bg-white _px-2 _py-6" v-if="results.length">
+          <div class="_z-20 _relative _grid _gap-6 _bg-white _px-2 _py-6">
             <ListboxOptions static>
               <!-- Disabled options will be skipped by keyboard navigation. -->
               <ListboxOption
@@ -31,7 +31,8 @@
 </template>
 
 <script>
-import session from '@/services/session'
+import session from '@/utilities/session'
+import { resolveAppShortcuts } from '@/utilities/app-shortcut-resolver'
 import { Listbox, ListboxOptions, ListboxButton, ListboxOption } from '@headlessui/vue'
 
 import NavTips from './NavTips'
@@ -64,20 +65,7 @@ export default {
     if (!shortcuts) return // need to fetch live from the web at this point; it hasn't been cached
     console.log('shortcuts', shortcuts)
 
-    const urlMatches = (target, candidate) => {
-      const pattern = candidate.replace(/([.?+^$[\]\\(){}|/-])/g, '\\$1').replace(/\*/g, '.*')
-      console.log('comparing', target, pattern)
-
-      return new RegExp(pattern).test(target)
-    }
-
-    const appShortcuts = shortcuts.reduce((appShortcuts, app) => {
-      if (urlMatches(window.location.href, app.urlPattern)) {
-        appShortcuts = appShortcuts.concat(app.shortcuts)
-      }
-
-      return appShortcuts
-    }, [])
+    const appShortcuts = resolveAppShortcuts(window.location.href, shortcuts)
 
     console.log('app shortcuts', appShortcuts)
 
