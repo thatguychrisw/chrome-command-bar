@@ -12,6 +12,30 @@
           }
         }
       ]
+    },
+    {
+      "label": "Italicize Text",
+      "events": [
+        {
+          "type": "KeyboardEvent",
+          "name": "keydown",
+          "options": {
+            "key": "i"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Underline Text",
+      "events": [
+        {
+          "type": "KeyboardEvent",
+          "name": "keydown",
+          "options": {
+            "key": "u"
+          }
+        }
+      ]
     }
   ]
 }
