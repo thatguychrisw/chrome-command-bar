@@ -5,7 +5,7 @@ describe('app-shortcut-resolver', () => {
   const stubsPath = __dirname + '/../../stubs/shortcuts/'
 
   it('provides a list of shortcuts based on a url', () => {
-    const stub = parseJson(`${stubsPath}/google-sheets-a.json`)
+    const stub = parseJson(`${stubsPath}/google-sheets-single.json`)
 
     const appShortcuts = resolveAppShortcuts('https://sheets.google.com', [stub])
 

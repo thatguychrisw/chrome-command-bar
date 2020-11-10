@@ -13,7 +13,7 @@
             <ListboxOptions static>
               <!-- Disabled options will be skipped by keyboard navigation. -->
               <ListboxOption
-                v-for="(result, i) in results"
+                v-for="(result, i) in shownShortcuts"
                 :key="i"
                 v-slot="{ active }"
                 :value="result"
@@ -34,6 +34,7 @@
 import session from '@/utilities/session'
 import { resolveAppShortcuts } from '@/utilities/app-shortcut-resolver'
 import { Listbox, ListboxOptions, ListboxButton, ListboxOption } from '@headlessui/vue'
+import Fuse from 'fuse.js'
 
 import NavTips from './NavTips'
 import SearchInput from './SearchInput'
@@ -55,10 +56,30 @@ export default {
 
     term: '',
     selectedResult: {},
-    results: []
+    shortcuts: [],
+    shortcutLabels: {}
   }),
 
-  methods: {},
+  methods: {
+    searchForShortcuts(term) {
+      return this.shortcutLabels.search(term).reduce((shortcuts, result) => {
+        shortcuts.push(result.item)
+
+        return shortcuts
+      }, [])
+    }
+  },
+  computed: {
+    shownShortcuts: function() {
+      if (!this.term) {
+        return this.shortcuts
+      }
+
+      const shortcuts = this.searchForShortcuts(this.term)
+
+      return shortcuts.length === 0 ? [{ label: 'No results found' }] : shortcuts
+    }
+  },
   async mounted() {
     const shortcuts = await session.get('ccb/shortcuts')
 
@@ -69,7 +90,14 @@ export default {
 
     console.log('app shortcuts', appShortcuts)
 
-    this.results = appShortcuts
+    this.shortcuts = appShortcuts
+
+    this.shortcutLabels = new Fuse(this.shortcuts, {
+      ignoreLocation: true,
+      ignoreFieldNorm: true,
+      threshold: 0,
+      keys: ['label']
+    })
   }
 }
 </script>

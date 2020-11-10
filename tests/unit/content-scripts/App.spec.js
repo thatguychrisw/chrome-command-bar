@@ -4,6 +4,7 @@ import { stubWindowLocation } from '../../stubs/window-location'
 import { storeShortcutStubs } from '../../stubs/session-shortcuts'
 import App from '@/content-scripts/App'
 import flushPromises from 'flush-promises'
+import SearchInput from '@/components/SearchInput'
 
 describe('Content-Scripts — App Component', () => {
   const mountApp = options => {
@@ -66,7 +67,7 @@ describe('Content-Scripts — App Component', () => {
   })
 
   it('shows the user a list of shortcuts based on the current url', async () => {
-    const stub = (await storeShortcutStubs('google-sheets-a.json'))[0]
+    const stub = (await storeShortcutStubs('google-sheets-single.json'))[0]
 
     stubWindowLocation('https://sheets.google.com')
 
@@ -78,5 +79,31 @@ describe('Content-Scripts — App Component', () => {
     await flushPromises()
 
     expect(wrapper.text()).toContain(stub.shortcuts[0].label)
+  })
+
+  it('filters a list of shortcuts when the user searches', async () => {
+    await storeShortcutStubs('google-sheets-multiple.json')
+
+    stubWindowLocation('https://sheets.google.com')
+
+    const wrapper = mountApp()
+
+    emitShowAppShortcutEvent()
+
+    await nextTick()
+    await flushPromises()
+
+    expect(wrapper.text()).toContain('Bold Text')
+    expect(wrapper.text()).toContain('Underline Text')
+
+    await wrapper
+      .findComponent(SearchInput)
+      .find('input')
+      .setValue('Bold')
+
+    await nextTick()
+
+    expect(wrapper.text()).toContain('Bold Text')
+    expect(wrapper.text()).not.toContain('Underline Text')
   })
 })

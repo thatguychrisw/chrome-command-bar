@@ -25,9 +25,9 @@ describe('create:shortcut-manifest', () => {
     expect(manifest).toBeTruthy()
 
     // manifest should include the path to a specific stub
-    const specificStub = 'google-sheets-a.json'
+    const specificStub = 'google-sheets-single.json'
     const stub = parseJson(`${stubsPath}/${specificStub}`)
-    expect(manifest[stub.urlPattern]).toEqual('google-sheets-a.json')
+    expect(manifest[stub.urlPattern]).toEqual(specificStub)
   })
 
   it('should exit without creating a manifest if no shortcuts are found', () => {

@@ -1,0 +1,29 @@
+{
+  "urlPattern": "http*://sheets.google.com",
+  "shortcuts": [
+    {
+      "label": "Bold Text",
+      "events": [
+        {
+          "type": "KeyboardEvent",
+          "name": "keydown",
+          "options": {
+            "key": "b"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Underline Text",
+      "events": [
+        {
+          "type": "KeyboardEvent",
+          "name": "keydown",
+          "options": {
+            "key": "u"
+          }
+        }
+      ]
+    }
+  ]
+}
