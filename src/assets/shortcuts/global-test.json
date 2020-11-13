@@ -8,7 +8,8 @@
           "type": "KeyboardEvent",
           "name": "keydown",
           "options": {
-            "key": "b"
+            "key": "b",
+            "metaKey": true
           }
         }
       ]
@@ -20,7 +21,8 @@
           "type": "KeyboardEvent",
           "name": "keydown",
           "options": {
-            "key": "i"
+            "key": "i",
+            "metaKey": true
           }
         }
       ]
@@ -32,7 +34,8 @@
           "type": "KeyboardEvent",
           "name": "keydown",
           "options": {
-            "key": "u"
+            "key": "u",
+            "metaKey": true
           }
         }
       ]
