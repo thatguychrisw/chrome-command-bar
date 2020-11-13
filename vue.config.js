@@ -14,6 +14,7 @@ module.exports = {
         },
         contentScripts: {
           entries: {
+            'command-bar-event-emitter': 'src/content-scripts/command-bar-event-emitter.js',
             'content-script': ['src/content-scripts/content-script.js']
           }
         }

@@ -1,14 +1,32 @@
 import ky from 'ky'
+import { prettifyJson } from '@/utilities/json'
 import session from '@/utilities/session'
 
+// this is for examining the session at runtime
 window.session = session
 
-const prettifyJson = obj => JSON.stringify(obj, null, 2)
+// add the chrome command listener which will trigger the command bar
+const addShowCommandBarListener = () => {
+  const currentWindowQuery = { active: true, currentWindow: true }
 
-// schedules
+  chrome.commands.onCommand.addListener(function(command) {
+    const shouldBarBeVisible = command === 'show-command-bar'
+
+    chrome.tabs.query(currentWindowQuery, tabs => {
+      const currentTab = tabs[0].id
+
+      chrome.tabs.sendMessage(currentTab, { shouldBarBeVisible }, response => {
+        console.log('response from command-bar', response)
+      })
+    })
+  })
+}
+addShowCommandBarListener()
+
+// create a scheduled task for caching shortcuts
 chrome.alarms.create('cache-shortcuts', { periodInMinutes: 1 })
 
-// listeners
+// create a listener that responds to scheduled tasks
 chrome.alarms.onAlarm.addListener(async alarm => {
   await cacheShortcuts(alarm)
 })

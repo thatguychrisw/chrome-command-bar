@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="chrome-cmd-bar-container">
+  <div v-if="show" id="chrome-cmd-bar" class="chrome-cmd-bar-container">
     <div class="chrome-cmd-bar-card">
       <Listbox v-model="selectedResult">
         <ListboxButton v-model="term" :as="SearchInput" />
@@ -9,12 +9,12 @@
           leave-from-class="_opacity-100"
           leave-to-class="_opacity-0"
         >
-          <div class="_z-20 _relative _grid _gap-6 _bg-white _px-2 _py-6">
+          <div class="_z-20 _relative _grid _gap-6 _bg-white _px-2 _py-6" v-if="shownShortcuts">
             <ListboxOptions static>
               <!-- Disabled options will be skipped by keyboard navigation. -->
               <ListboxOption
-                v-for="(result, i) in shownShortcuts"
-                :key="i"
+                v-for="result in shownShortcuts"
+                :key="result.label"
                 v-slot="{ active }"
                 :value="result"
               >

@@ -4,14 +4,15 @@ export default function useCommandBarShortcut() {
   const showCommandBar = ref(false)
 
   onMounted(() => {
-    window.addEventListener('keydown', e => {
-      if (e.metaKey && e.ctrlKey && e.key === 'p') {
-        showCommandBar.value = true
-      }
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+      showCommandBar.value = request.shouldBarBeVisible
 
-      if (e.key === 'Escape') {
-        showCommandBar.value = false
-      }
+      // respond to the background page
+      sendResponse(showCommandBar.value)
+    })
+
+    document.addEventListener('hide-command-bar', () => {
+      showCommandBar.value = false
     })
   })
 

@@ -29,7 +29,21 @@
       "38": "icons/38.png"
     }
   },
+  "commands": {
+    "show-command-bar": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Show command bar"
+    }
+  },
   "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/command-bar-event-emitter.js"],
+      "run_at": "document_start"
+    },
     {
       "matches": ["*://*/*"],
       "js": ["js/content-script.js"]
