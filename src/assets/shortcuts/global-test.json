@@ -1,12 +1,12 @@
 {
   "urlPattern": "http*://*.*",
+  "eventTarget": ".docs-texteventtarget-iframe",
   "shortcuts": [
     {
       "label": "Bold Text",
       "events": [
         {
-          "type": "KeyboardEvent",
-          "name": "keydown",
+          "type": "keydown",
           "options": {
             "key": "b",
             "metaKey": true
@@ -18,8 +18,7 @@
       "label": "Italicize Text",
       "events": [
         {
-          "type": "KeyboardEvent",
-          "name": "keydown",
+          "type": "keydown",
           "options": {
             "key": "i",
             "metaKey": true
@@ -31,8 +30,7 @@
       "label": "Underline Text",
       "events": [
         {
-          "type": "KeyboardEvent",
-          "name": "keydown",
+          "type": "keydown",
           "options": {
             "key": "u",
             "metaKey": true
