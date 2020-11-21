@@ -8,7 +8,7 @@
         {
           "type": "keydown",
           "options": {
-            "key": "b",
+            "keyCode": 66,
             "metaKey": true
           }
         }
